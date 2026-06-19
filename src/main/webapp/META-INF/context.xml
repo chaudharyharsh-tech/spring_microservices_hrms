@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- This configures the connection pool inside Tomcat -->
+    <Resource name="jdbc/MyLocalDB" 
+              auth="Container" 
+              type="javax.sql.DataSource"
+              maxTotal="20" 
+              maxIdle="5" 
+              maxWaitMillis="10000"
+              username="sa" 
+              password="your_strong_password" 
+              driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+              url="jdbc:sqlserver://localhost:1433;databaseName=your_database_name;encrypt=true;trustServerCertificate=true;"/>
+</Context>

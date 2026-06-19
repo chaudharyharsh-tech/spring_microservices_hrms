@@ -1,0 +1,21 @@
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+.settings/
+.junie
+*.iml
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment/config secrets
+.env
+application-local.properties
+

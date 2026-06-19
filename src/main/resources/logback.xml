@@ -1,0 +1,17 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Set root logger level to INFO -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Specifically set your package to INFO to ensure it prints -->
+    <logger name="springmvc" level="INFO" />
+
+</configuration>
