@@ -10,7 +10,7 @@ public interface EmployeeDao{
     void save(Employee employee);
     List<Employee> getAll();
     Employee getByID(int id);
-    void delete(int id);
+    boolean delete(int id);
     boolean markAttendance(int id, int status_id, LocalDate date);
     List<DailyAttendanceDTO> getAttendanceStatuses(LocalDate date);
     List<DailyAttendanceDTO> getAttendanceByUser(int id);

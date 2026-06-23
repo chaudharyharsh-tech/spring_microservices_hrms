@@ -7,21 +7,28 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.AbstractBindingResult;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.model.Employee;
 import springmvc.service.EmployeeService;
+import springmvc.validators.EmployeeValidator;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 	
 	private final EmployeeService employeeService;
+
+	private final EmployeeValidator employeeValidator;
 	
 	@Autowired
-	public EmployeeController(EmployeeService employeeService) {
+	public EmployeeController(EmployeeService employeeService, EmployeeValidator employeeValidator) {
 		this.employeeService = employeeService;
+		this.employeeValidator = employeeValidator;
 	}
 
 	@GetMapping(produces = "application/json")
@@ -40,8 +47,14 @@ public class EmployeeController {
 	}
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<Void> createEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<String> createEmployee(@RequestBody Employee employee, BindingResult errors) {
 		boolean isCreated = employeeService.saveEmployee(employee);
+//		BindingResult errors = new BeanPropertyBindingResult(employee, "employee");
+		employeeValidator.validate(employee, errors);
+
+		if(errors.hasErrors()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.toString());
+		}
 
 		if(isCreated) {
 			return ResponseEntity.status(HttpStatus.CREATED).build();

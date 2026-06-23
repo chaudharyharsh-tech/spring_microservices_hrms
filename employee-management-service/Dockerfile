@@ -16,4 +16,4 @@ FROM tomcat:10.1-jdk21 AS runner
 
 COPY --from=builder ./app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
-EXPOSE 4000
+EXPOSE 8080

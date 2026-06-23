@@ -126,12 +126,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM employee WHERE id = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, id);
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
         } catch(SQLException e) {
             throw new RuntimeException("Error deleting employee ", e);
         }
@@ -209,6 +209,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 Employee emp = EmployeeMapper.mapEmployee(rs);
                 attendance.setDate(rs.getDate("AttendanceDate"));
                 attendance.setAttendance_Status(rs.getInt("StatusID"));
+                attendance.setEmployee(emp);
                 list.add(attendance);
             }
             return list;

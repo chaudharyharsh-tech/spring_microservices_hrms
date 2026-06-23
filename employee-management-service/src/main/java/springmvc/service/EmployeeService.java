@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.dao.EmployeeDao;
+import springmvc.exceptions.UserNotDeletedException;
 import springmvc.model.Employee;
 
 import java.time.LocalDate;
@@ -34,12 +35,12 @@ public class EmployeeService {
         return employeeDao.getByID(id);
     }
 
-    public boolean deleteEmployee(int id) {
-        try {
-            employeeDao.delete(id);
-            return true; // Deletion was successful
-        } catch (Exception e) {
-            return false; // Deletion failed (e.g., employee didn't exist or DB error)
+    public boolean deleteEmployee(int id){
+        if(employeeDao.delete(id)){
+            return true;
+        }else {
+            throw new UserNotDeletedException("User with id: "+id +
+                    " was not deleted due to some errors");
         }
     }
 

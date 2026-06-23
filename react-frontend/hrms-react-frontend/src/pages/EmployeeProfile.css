@@ -1,0 +1,122 @@
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+  padding: var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-gradient);
+  opacity: 0.06;
+  border-radius: var(--radius-xl);
+}
+
+.profile-hero-info {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-hero-name {
+  font-size: var(--font-3xl);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--space-2);
+}
+
+.profile-hero-id {
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  font-family: monospace;
+  margin-bottom: var(--space-3);
+}
+
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.profile-detail-card h3 {
+  font-size: var(--font-base);
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.profile-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.profile-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-detail-label {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.profile-detail-value {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  text-align: right;
+}
+
+.profile-attendance-section h3 {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.attendance-history-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.attendance-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  font-size: var(--font-sm);
+}
+
+.attendance-history-date {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.profile-back-btn {
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .profile-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-6);
+  }
+  .profile-details-grid {
+    grid-template-columns: 1fr;
+  }
+}

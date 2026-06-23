@@ -1,5 +1,5 @@
 # Maven
-target/
+employee-management-service/target/
 
 # IntelliJ IDEA
 .idea/
@@ -18,4 +18,8 @@ Thumbs.db
 # Environment/config secrets
 .env
 application-local.properties
+
+# Frontend Files
+react-frontend/hrms-react-frontend/node_modules/
+react-frontend/hrms-react-frontend/dist/
 
