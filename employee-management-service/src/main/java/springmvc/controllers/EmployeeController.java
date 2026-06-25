@@ -7,9 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.AbstractBindingResult;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import springmvc.dto.DailyAttendanceDTO;
@@ -47,7 +47,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<String> createEmployee(@RequestBody Employee employee, BindingResult errors) {
+	public ResponseEntity<String> createEmployee(@Validated @RequestBody Employee employee, BindingResult errors) {
 		boolean isCreated = employeeService.saveEmployee(employee);
 //		BindingResult errors = new BeanPropertyBindingResult(employee, "employee");
 		employeeValidator.validate(employee, errors);
@@ -95,13 +95,24 @@ public class EmployeeController {
 		}
 	}
 
-	@GetMapping(value="attendancebyid/{id}", produces="application/json")
+	@GetMapping(value="attendance-by-id/{id}", produces="application/json")
 	public ResponseEntity<List<DailyAttendanceDTO>> getAttendanceByID(@PathVariable("id") int id) {
 		List<DailyAttendanceDTO> dailyAttendanceDTOS = employeeService.getAttendanceByID(id);
 		if(dailyAttendanceDTOS != null && !dailyAttendanceDTOS.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(dailyAttendanceDTOS);
 		}else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+	}
+
+	@PostMapping(value="create-salary/{id}/{salary}", produces="application/json")
+	public ResponseEntity<String> createSalaryByID(@PathVariable int id, @PathVariable int salary) {
+		String response = employeeService.createSalaryByID(id, salary);
+		if(!response.isBlank()) {
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 
 	}

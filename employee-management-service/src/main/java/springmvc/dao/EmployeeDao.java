@@ -3,6 +3,7 @@ package springmvc.dao;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.model.Employee;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface EmployeeDao{
     boolean markAttendance(int id, int status_id, LocalDate date);
     List<DailyAttendanceDTO> getAttendanceStatuses(LocalDate date);
     List<DailyAttendanceDTO> getAttendanceByUser(int id);
+    boolean createSalaryById(int id, int salary) throws SQLException;
 }

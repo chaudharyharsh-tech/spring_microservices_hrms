@@ -23,3 +23,26 @@ application-local.properties
 react-frontend/hrms-react-frontend/node_modules/
 react-frontend/hrms-react-frontend/dist/
 
+# Logs
+react-frontend/hrms-react-frontend/logs
+react-frontend/hrms-react-frontend/*.log
+react-frontend/hrms-react-frontend/npm-debug.log*
+react-frontend/hrms-react-frontend/yarn-debug.log*
+react-frontend/hrms-react-frontend/yarn-error.log*
+react-frontend/hrms-react-frontend/pnpm-debug.log*
+react-frontend/hrms-react-frontend/lerna-debug.log*
+
+react-frontend/hrms-react-frontend/dist-ssr
+react-frontend/hrms-react-frontend/*.local
+
+# Editor directories and files
+react-frontend/hrms-react-frontend/.vscode/*
+react-frontend/hrms-react-frontend/!.vscode/extensions.json
+react-frontend/hrms-react-frontend/.idea
+react-frontend/hrms-react-frontend/.DS_Store
+react-frontend/hrms-react-frontend/*.suo
+react-frontend/hrms-react-frontend/*.ntvs*
+react-frontend/hrms-react-frontend/*.njsproj
+react-frontend/hrms-react-frontend/*.sln
+react-frontend/hrms-react-frontend/*.sw?
+

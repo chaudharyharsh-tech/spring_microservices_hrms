@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.dao.EmployeeDao;
+import springmvc.exceptions.SalaryNotCreatedException;
 import springmvc.exceptions.UserNotDeletedException;
 import springmvc.model.Employee;
 
@@ -59,6 +60,14 @@ public class EmployeeService {
 
     public List<DailyAttendanceDTO> getAttendanceByID(int id) {
         return employeeDao.getAttendanceByUser(id);
+    }
+
+    public String createSalaryByID(int id, int salary) {
+        if(employeeDao.createSalaryById(id, salary)) {
+            return "Salary was created successfully for user ID: " + id;
+        } else{
+            throw new SalaryNotCreatedException("Salary not created for some reason");
+        }
     }
 
 }

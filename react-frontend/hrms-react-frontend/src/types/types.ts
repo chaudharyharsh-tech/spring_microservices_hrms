@@ -56,7 +56,6 @@ export const PositionPayBand: Record<string, number> = {
   QA_TESTER: 45000,
   HR_EXECUTIVE: 40000,
   PRODUCT_MANAGER: 100000,
-  'UI/UX Designer': 55000,
   DATA_ANALYST: 55000,
   SCRUM_MASTER: 85000,
   DEVOPS_ENGINEER: 75000,
