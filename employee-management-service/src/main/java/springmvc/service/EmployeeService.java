@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.dao.EmployeeDao;
+import springmvc.dto.SalaryStatementRequest;
 import springmvc.exceptions.SalaryNotCreatedException;
 import springmvc.exceptions.UserNotDeletedException;
 import springmvc.model.Employee;
@@ -68,6 +69,10 @@ public class EmployeeService {
         } else{
             throw new SalaryNotCreatedException("Salary not created for some reason");
         }
+    }
+
+    public String createSalaryStatement(SalaryStatementRequest salaryStatementRequest){
+        return "";
     }
 
 }

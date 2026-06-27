@@ -15,5 +15,5 @@ public interface EmployeeDao{
     boolean markAttendance(int id, int status_id, LocalDate date);
     List<DailyAttendanceDTO> getAttendanceStatuses(LocalDate date);
     List<DailyAttendanceDTO> getAttendanceByUser(int id);
-    boolean createSalaryById(int id, int salary) throws SQLException;
+    boolean createSalaryById(int id, int salary);
 }

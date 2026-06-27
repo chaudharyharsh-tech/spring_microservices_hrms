@@ -1,5 +1,6 @@
 # Maven
 employee-management-service/target/
+employee-management-service/backup.png
 
 # IntelliJ IDEA
 .idea/
@@ -45,4 +46,7 @@ react-frontend/hrms-react-frontend/*.ntvs*
 react-frontend/hrms-react-frontend/*.njsproj
 react-frontend/hrms-react-frontend/*.sln
 react-frontend/hrms-react-frontend/*.sw?
+
+
+salary-account-service/target/
 

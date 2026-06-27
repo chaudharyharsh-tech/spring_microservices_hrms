@@ -15,5 +15,6 @@
     <!-- List all your microservice subfolders here -->
     <modules>
         <module>employee-management-service</module>
+        <module>salary-account-service</module>
     </modules>
 </project>

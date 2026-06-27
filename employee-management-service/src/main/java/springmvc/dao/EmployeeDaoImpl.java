@@ -218,7 +218,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
     }
 
-    public boolean createSalaryById(int id, int salary) throws SQLException{
+    public boolean createSalaryById(int id, int salary){
         String sql = "UPDATE employees SET salary = ? WHERE id=?";
 
         try(Connection conn = dataSource.getConnection();
@@ -227,7 +227,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.setInt(2, id);
             return ps.executeUpdate() > 0;
         } catch(SQLException e) {
-            throw new SQLException("Error when connecting to database. Operation failed for ID: " + id);
+            throw new RuntimeException("Error when connecting to database. Operation failed for ID: " + id);
         }
 
     }

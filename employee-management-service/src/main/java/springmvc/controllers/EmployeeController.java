@@ -1,5 +1,6 @@
 package springmvc.controllers;
 
+import java.lang.annotation.Repeatable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import springmvc.dto.DailyAttendanceDTO;
+import springmvc.dto.SalaryStatementRequest;
 import springmvc.model.Employee;
 import springmvc.service.EmployeeService;
 import springmvc.validators.EmployeeValidator;
@@ -109,11 +111,21 @@ public class EmployeeController {
 	@PostMapping(value="create-salary/{id}/{salary}", produces="application/json")
 	public ResponseEntity<String> createSalaryByID(@PathVariable int id, @PathVariable int salary) {
 		String response = employeeService.createSalaryByID(id, salary);
-		if(!response.isBlank()) {
+		if(response.isBlank()) {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 
+	}
+
+	@PostMapping(value="/create-salary-statement", produces="application/json")
+	public ResponseEntity<String> createSalaryStatement(@RequestBody SalaryStatementRequest salaryStatementDto){
+		String response = employeeService.createSalaryStatement(salaryStatementDto);
+		if(!response.isBlank()) {
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Couldn't create Salary Statement");
+		}
 	}
 }
