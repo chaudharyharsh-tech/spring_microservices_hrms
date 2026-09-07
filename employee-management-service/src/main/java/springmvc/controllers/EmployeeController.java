@@ -1,20 +1,22 @@
 package springmvc.controllers;
 
-import java.lang.annotation.Repeatable;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
+import com.chaudharyharsh.salaryaccountservice.Salary;
+import com.chaudharyharsh.salaryaccountservice.SalaryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import springmvc.dto.DailyAttendanceDTO;
-import springmvc.dto.SalaryStatementRequest;
+import springmvc.dto.SalaryStatementDTO;
+import springmvc.grpc.GrpcClient;
 import springmvc.model.Employee;
 import springmvc.service.EmployeeService;
 import springmvc.validators.EmployeeValidator;
@@ -26,11 +28,15 @@ public class EmployeeController {
 	private final EmployeeService employeeService;
 
 	private final EmployeeValidator employeeValidator;
+
+	private final GrpcClient grpcClient;
 	
 	@Autowired
-	public EmployeeController(EmployeeService employeeService, EmployeeValidator employeeValidator) {
+	public EmployeeController(EmployeeService employeeService, EmployeeValidator employeeValidator,
+							  GrpcClient grpcClient) {
 		this.employeeService = employeeService;
 		this.employeeValidator = employeeValidator;
+		this.grpcClient = grpcClient;
 	}
 
 	@GetMapping(produces = "application/json")
@@ -120,12 +126,27 @@ public class EmployeeController {
 	}
 
 	@PostMapping(value="/create-salary-statement", produces="application/json")
-	public ResponseEntity<String> createSalaryStatement(@RequestBody SalaryStatementRequest salaryStatementDto){
+	public ResponseEntity<String> createSalaryStatement(@RequestBody SalaryStatementDTO salaryStatementDto){
 		String response = employeeService.createSalaryStatement(salaryStatementDto);
 		if(!response.isBlank()) {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Couldn't create Salary Statement");
 		}
+	}
+
+	@GetMapping(value="/get-salary-statement/{id}", produces = "application/json")
+	public SalaryStatementDTO getSalaryStatement(@PathVariable("id") int id) {
+		SalaryResponse salaryResponse = grpcClient.getSalary(id);
+		SalaryStatementDTO salaryStatementDTO = new SalaryStatementDTO();
+		Salary salary = salaryResponse.getSalary(0);
+		salaryStatementDTO.setEmployee_id((int) salary.getEmployeeId());
+		salaryStatementDTO.setSalary((int) salary.getSalary());
+		salaryStatementDTO.setBasic_pay((int) salary.getBasicPay());
+		salaryStatementDTO.setAllowances((int) salary.getAllowances());
+		String monthName = (String) salary.getSalaryMonth().getMonthName();
+		Month month = Month.valueOf(monthName.toUpperCase());
+		salaryStatementDTO.setSalaryMonth(month);
+		return salaryStatementDTO;
 	}
 }

@@ -1,0 +1,5 @@
+GRPC localhost:8980/SalaryAccountService/getSalaryDetails
+
+{
+  "employee_id": "1"
+}

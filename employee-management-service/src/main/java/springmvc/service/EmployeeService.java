@@ -2,9 +2,10 @@ package springmvc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.dao.EmployeeDao;
-import springmvc.dto.SalaryStatementRequest;
+import springmvc.dto.SalaryStatementDTO;
 import springmvc.exceptions.SalaryNotCreatedException;
 import springmvc.exceptions.UserNotDeletedException;
 import springmvc.model.Employee;
@@ -71,8 +72,10 @@ public class EmployeeService {
         }
     }
 
-    public String createSalaryStatement(SalaryStatementRequest salaryStatementRequest){
+    public String createSalaryStatement(SalaryStatementDTO salaryStatementDTO){
         return "";
     }
+
+
 
 }

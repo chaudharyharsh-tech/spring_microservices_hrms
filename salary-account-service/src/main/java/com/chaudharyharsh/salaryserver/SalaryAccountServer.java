@@ -1,32 +1,37 @@
-package com.chaudharyharsh.salaryservice;
+package com.chaudharyharsh.salaryserver;
 
 import com.chaudharyharsh.salaryaccountservice.*;
+import com.zaxxer.hikari.HikariDataSource;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
-import io.grpc.protobuf.services.ProtoReflectionServiceV1;
+import io.grpc.protobuf.services.ProtoReflectionService;
 import io.grpc.stub.StreamObserver;
 import io.micrometer.common.util.internal.logging.InternalLogger;
 import io.micrometer.common.util.internal.logging.Slf4JLoggerFactory;
 
+import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
 
 import static io.grpc.Grpc.newServerBuilderForPort;
 
+
 public class SalaryAccountServer {
 
     private static final InternalLogger logger = Slf4JLoggerFactory.getInstance(SalaryAccountServer.class);
+    DataSource dataSource;
 
     private final int port;
     private final Server server;
 
-    public SalaryAccountServer() {
+    public SalaryAccountServer(HikariDataSource dataSource) {
         this(9001);
+        this.dataSource = dataSource;
     }
 
     public SalaryAccountServer(int port) {
         this.port = port;
         server = newServerBuilderForPort(port, InsecureServerCredentials.create())
-                .addService(ProtoReflectionServiceV1.newInstance())
+                .addService(ProtoReflectionService.newInstance())
                 .addService(new SalaryAccountService()).build();
     }
 
@@ -57,7 +62,7 @@ public class SalaryAccountServer {
     /**
      * Await termination on the main thread since the grpc library uses daemon threads.
      */
-    private void blockUntilShutdown() throws InterruptedException {
+    public void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
         }

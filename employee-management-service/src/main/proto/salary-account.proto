@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.chaudharyharsh.salaryaccountservice";
+option java_outer_classname = "SalaryAccount";
+
+service SalaryAccountService{
+  rpc getSalaryDetails(SalaryRequest) returns (SalaryResponse) {}
+  rpc createSalary(SalaryCreationRequest) returns (SalaryCreationResponse) {}
+}
+
+message SalaryRequest{
+  int64 employee_id = 1;
+}
+
+message SalaryResponse{
+  repeated Salary salary = 1;
+}
+
+message Salary{
+  int64 employee_id = 1;
+  int64 salary = 2;
+  int64 basic_pay = 3;
+  int64 Da = 4;
+  int64 Ta = 5;
+  int64 allowances = 6;
+  int64 bonus = 7;
+  Date created_date = 8;
+  Month salary_month = 9;
+}
+
+message Month{
+  string month_name = 1;
+}
+
+message Date {
+  int32 year = 1;
+  int32 month = 2;
+  int32 day = 3;
+}
+
+message SalaryCreationRequest{
+  int64 employee_id = 1;
+  Salary salary = 2;
+}
+
+message SalaryCreationResponse{
+  string response = 1;
+}

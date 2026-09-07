@@ -1,4 +1,4 @@
-package com.chaudharyharsh.salaryservice;
+package com.chaudharyharsh.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
