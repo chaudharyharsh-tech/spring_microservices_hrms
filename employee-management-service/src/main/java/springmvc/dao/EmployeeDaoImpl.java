@@ -1,9 +1,12 @@
 package springmvc.dao;
 
+import com.chaudharyharsh.salaryaccountservice.Month;
+import com.chaudharyharsh.salaryaccountservice.Salary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import springmvc.exceptions.SalaryNotCreatedException;
 import springmvc.mapper.EmployeeMapper;
 import springmvc.model.Employee;
 import springmvc.dto.DailyAttendanceDTO;
@@ -218,16 +221,27 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
     }
 
-    public boolean createSalaryById(int id, int salary){
-        String sql = "UPDATE employees SET salary = ? WHERE id=?";
+    public Salary createSalaryById(int id, int salary){
+//        String sql = "UPDATE salary_account SET salary = ? WHERE id=?";
+        String sql = "INSERT INTO salary_account (salary, employee_id) VALUES(?, ?)";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, salary);
             ps.setInt(2, id);
-            return ps.executeUpdate() > 0;
+            if(ps.executeUpdate() > 0) {
+                String monthName = LocalDate.now().getMonth().toString();
+                Month month = Month.newBuilder().setMonthName(monthName).build();
+                return Salary.newBuilder()
+                        .setEmployeeId(id)
+                        .setSalary(salary)
+                        .setSalaryMonth(month)
+                        .build();
+            }else {
+                throw new SalaryNotCreatedException("Salary not created. Transaction Failed.");
+            }
         } catch(SQLException e) {
-            throw new RuntimeException("Error when connecting to database. Operation failed for ID: " + id);
+            throw new RuntimeException("Error when connecting to database. Operation failed for ID: " + id + ". with error" + e);
         }
 
     }

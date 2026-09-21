@@ -1,0 +1,5 @@
+### GET request to get salary statement and test Kafka Producer
+GET http://localhost:8080/api/employees/get-salary-statement/1
+
+###
+GET http://localhost:8080/api/employees/create-salary/8/12000

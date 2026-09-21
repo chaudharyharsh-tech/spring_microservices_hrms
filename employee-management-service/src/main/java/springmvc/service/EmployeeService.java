@@ -1,13 +1,14 @@
 package springmvc.service;
 
+import com.chaudharyharsh.salaryaccountservice.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.dao.EmployeeDao;
 import springmvc.dto.SalaryStatementDTO;
 import springmvc.exceptions.SalaryNotCreatedException;
 import springmvc.exceptions.UserNotDeletedException;
+import springmvc.kafka.KafkaProducer;
 import springmvc.model.Employee;
 
 import java.time.LocalDate;
@@ -20,9 +21,13 @@ public class EmployeeService {
 
     private final EmployeeDao employeeDao;
 
+    private final KafkaProducer kafkaProducer;
+
     @Autowired
-    public EmployeeService(EmployeeDao employeeDao) {
+    public EmployeeService(EmployeeDao employeeDao,
+                           KafkaProducer kafkaProducer) {
         this.employeeDao = employeeDao;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public boolean saveEmployee(Employee employee) {
@@ -65,10 +70,12 @@ public class EmployeeService {
     }
 
     public String createSalaryByID(int id, int salary) {
-        if(employeeDao.createSalaryById(id, salary)) {
+        try {
+            Salary salaryObj = employeeDao.createSalaryById(id, salary);
+            kafkaProducer.sendEvent(salaryObj);
             return "Salary was created successfully for user ID: " + id;
-        } else{
-            throw new SalaryNotCreatedException("Salary not created for some reason");
+        } catch(Exception e){
+            throw new SalaryNotCreatedException("Salary not created for reason : " + e.getMessage());
         }
     }
 

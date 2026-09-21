@@ -33,11 +33,11 @@ public class EmployeeController {
 	
 	@Autowired
 	public EmployeeController(EmployeeService employeeService, EmployeeValidator employeeValidator,
-							  GrpcClient grpcClient) {
+                              GrpcClient grpcClient) {
 		this.employeeService = employeeService;
 		this.employeeValidator = employeeValidator;
 		this.grpcClient = grpcClient;
-	}
+    }
 
 	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<Employee>> getAllEmployees() {
@@ -114,10 +114,10 @@ public class EmployeeController {
 
 	}
 
-	@PostMapping(value="create-salary/{id}/{salary}", produces="application/json")
-	public ResponseEntity<String> createSalaryByID(@PathVariable int id, @PathVariable int salary) {
+	@GetMapping(value="create-salary/{id}/{salary}", produces="application/json")
+	public ResponseEntity<String> createSalaryByID(@PathVariable("id") int id, @PathVariable("salary") int salary) {
 		String response = employeeService.createSalaryByID(id, salary);
-		if(response.isBlank()) {
+		if(!response.isBlank()) {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
@@ -149,4 +149,9 @@ public class EmployeeController {
 		salaryStatementDTO.setSalaryMonth(month);
 		return salaryStatementDTO;
 	}
+
+//	@GetMapping(value = "/send-event/salary", produces = "application/json")
+//	public ResponseEntity<String> sendSalaryEvent(@RequestBody Salary) {
+//
+//	}
 }

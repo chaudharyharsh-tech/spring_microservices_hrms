@@ -7,7 +7,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {RootConfig.class, DatabaseConfig.class};
+		return new Class[] {RootConfig.class, DatabaseConfig.class, KafkaConfig.class};
 	}
 
 	@Override

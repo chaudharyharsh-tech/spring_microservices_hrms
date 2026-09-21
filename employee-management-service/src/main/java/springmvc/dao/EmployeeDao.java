@@ -1,5 +1,6 @@
 package springmvc.dao;
 
+import com.chaudharyharsh.salaryaccountservice.Salary;
 import springmvc.dto.DailyAttendanceDTO;
 import springmvc.model.Employee;
 
@@ -15,5 +16,5 @@ public interface EmployeeDao{
     boolean markAttendance(int id, int status_id, LocalDate date);
     List<DailyAttendanceDTO> getAttendanceStatuses(LocalDate date);
     List<DailyAttendanceDTO> getAttendanceByUser(int id);
-    boolean createSalaryById(int id, int salary);
+    Salary createSalaryById(int id, int salary);
 }
